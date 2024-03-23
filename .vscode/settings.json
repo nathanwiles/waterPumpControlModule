@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.ejs": "html",
+    "*.rb": "ruby",
+    "cstddef": "cpp"
+  }
+}
