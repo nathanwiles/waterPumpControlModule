@@ -8,7 +8,6 @@
 #include "refillTank.h"
 #include "persistentRefillMessage.h"
 
-int waterPlants(int wateringDuration);
-void startWatering(int wateringDuration);
+void waterPlants(int wateringDuration);
 
 #endif

@@ -46,7 +46,7 @@ void waterPlants(int wateringDuration = 30)
   displayMessage("Watering:", "Complete");
   delay(5000);
 
-  if levels.reserveLevel == "E"
+  if (levels.reserveLevel == "E")
   {
     displayMessage("Reserve Tank:", "Empty");
     delay(5000);
