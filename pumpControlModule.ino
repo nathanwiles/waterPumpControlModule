@@ -35,7 +35,7 @@ void loop() {
 
   if (isStarted && millis() - lastButtonPressTime > 3000) {  // 3 seconds have passed
     if (selectedDuration != 0) {
-      startWatering(selectedDuration);
+      waterPlants(selectedDuration);
     }
     isStarted = false;  // go back to waiting for a button press
     toggleLCDPower(false);
