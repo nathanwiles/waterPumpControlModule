@@ -5,6 +5,8 @@
 #include "readWaterLevels.h"
 #include "pumpControl.h"
 #include "lcdController.h"
+#include "refillTank.h"
+#include "persistentRefillMessage.h"
 
 int waterPlants(int wateringDuration);
 void startWatering(int wateringDuration);
