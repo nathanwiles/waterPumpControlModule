@@ -9,7 +9,7 @@ void displayRefillMessage()
   {
     displayMessage("Reserve Tank:", "Empty");
     delay(2000);
-    displayMessage("Reserve Tank:", "Needs Refill")
+    displayMessage("Reserve Tank:", "Needs Refill");
     delay(2000);
     waterLevelSensorValues = readWaterLevelSensors();
     levels = getReservoirLevels(waterLevelSensorValues);
