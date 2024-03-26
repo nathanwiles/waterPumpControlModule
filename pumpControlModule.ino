@@ -41,5 +41,5 @@ void loop() {
     toggleLCDPower(false);
     selectedDuration = 0;  // reset to the initial value
   }
-  delay(250);  // delay to avoid button debouncing
+  delay(500);  // delay to avoid button debouncing
 }
