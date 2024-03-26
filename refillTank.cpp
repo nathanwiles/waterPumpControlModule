@@ -45,7 +45,7 @@ void refillTank()
         turnOffRefillPump();
         displayMessage("Reserve Tank:", "Empty");
         delay(5000);
-        return
+        return;
       }
       delay(500);
     } while (levels.mainLevel != "F");
@@ -53,6 +53,6 @@ void refillTank()
     turnOffRefillPump();
     displayMessage("Main Tank:", "Full");
     delay(5000);
-    return
+    return;
   }
 }
