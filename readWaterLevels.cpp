@@ -5,6 +5,7 @@ int *readWaterLevelSensors()
 {
   static int pinValues[3];
   // configure and read water level sensor pins
+  // pins 0, 1, and 2 are the main tank empty, main tank full, and reserve tank full sensors, respectively
   for (int i = 0; i < 3; i++)
   {
     pinMode(i, INPUT);
@@ -13,8 +14,9 @@ int *readWaterLevelSensors()
   return pinValues;
 }
 
-WaterLevels getReservoirLevels(int pinValues[3])
+WaterLevels getReservoirLevels()
 {
+  int *pinValues = readWaterLevelSensors();
   String mainLevel = pinValues[1] == HIGH ? "F" : pinValues[0] == HIGH ? "P"
                                                                        : "E";
   String reserveLevel = pinValues[2] == LOW ? "E" : "F";
@@ -29,9 +31,7 @@ void monitorWaterLevels(unsigned long duration, unsigned long refreshRate)
 
   while (millis() - startTime < duration)
   {
-    int *pinValues = readWaterLevelSensors();
-
-    WaterLevels levels = getReservoirLevels(pinValues);
+    WaterLevels levels = getReservoirLevels();
 
     String mainLevel = levels.mainLevel;
     String reserveLevel = levels.reserveLevel;
