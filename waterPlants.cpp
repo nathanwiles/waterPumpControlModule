@@ -44,17 +44,10 @@ void waterPlants(int wateringDuration = 30)
 
   turnOffMainPump();
   displayMessage("Watering:", "Complete");
-  delay(5000);
-
-  if (levels.reserveLevel == "E")
-  {
-    displayMessage("Reserve Tank:", "Empty");
-    delay(5000);
-  }
+  delay(3000);
 
   // Once watering is complete, refill main tank
   refillTank();
-  displayRefillMessage();
 
   return; // Return 0 if watering is complete
 }
