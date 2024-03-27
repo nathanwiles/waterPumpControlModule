@@ -7,6 +7,11 @@ void refillTank()
   int *waterLevelSensorValues = readWaterLevelSensors();
   WaterLevels levels = getReservoirLevels(waterLevelSensorValues);
 
+  if (levels.mainLevel == "F") {
+    displayMessage("Main Tank:", "Already Full!");
+    delay(2000);
+  };
+
   if (levels.mainLevel != "F" && levels.reserveLevel == "F")
   {
     // Refill the main tank
@@ -37,14 +42,14 @@ void refillTank()
         }
 
         displayMessage("Overflow Cleared", "Resuming");
+        delay(2000);
       }
 
       if (levels.reserveLevel == "E")
       {
         // If the reserve tank is empty, stop refilling and display the message
         turnOffRefillPump();
-        displayMessage("Reserve Tank:", "Empty");
-        delay(5000);
+        displayRefillMessage();
         return;
       }
       delay(500);

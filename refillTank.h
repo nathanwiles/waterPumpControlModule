@@ -5,6 +5,8 @@
 #include "readWaterLevels.h"
 #include "pumpControl.h"
 #include "lcdController.h"
+#include "persistentRefillMessage.h"
+
 
 void refillTank();
 
