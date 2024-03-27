@@ -3,8 +3,7 @@
 // if reservoir is empty, displays a persistent refill message until reservoir is full
 void displayRefillMessage()
 {
-  int *waterLevelSensorValues = readWaterLevelSensors();
-  WaterLevels levels = getReservoirLevels(waterLevelSensorValues);
+  WaterLevels levels = getReservoirLevels();
 
   while (levels.reserveLevel == "E")
   {
@@ -12,11 +11,9 @@ void displayRefillMessage()
     delay(2000);
     displayMessage("Reserve Tank:", "Needs Refill");
     delay(2000);
-    waterLevelSensorValues = readWaterLevelSensors();
-    levels = getReservoirLevels(waterLevelSensorValues);
+    levels = getReservoirLevels();
   }
   displayMessage("Reserve Tank:", "Full");
   delay(2000);
   displayMessage("Reserve Tank:", "Thanks! you're a lifesaver!");
-  delay(2000);
 }
