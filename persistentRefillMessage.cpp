@@ -1,5 +1,6 @@
 #include "persistentRefillMessage.h"
 
+// if reservoir is empty, displays a persistent refill message until reservoir is full
 void displayRefillMessage()
 {
   int *waterLevelSensorValues = readWaterLevelSensors();
