@@ -27,7 +27,6 @@ void toggleLCDPower(bool powerOn)
   lcd.createChar(6, water7);
   lcd.createChar(7, water8);
 
-
   if (!powerOn)
   {
     lcd.clear();
@@ -46,22 +45,54 @@ void multiPrint(DisplayItem *items, int itemCount)
   for (int i = 0; i < itemCount; i++)
   {
     lcd.setCursor(items[i].cursorX, items[i].cursorY);
-    if (items[i].message.length() > 16) {
-      for (int j = 0; j <= items[i].message.length() - 15; j++) {
+    if (items[i].message.length() > 16)
+    {
+      for (int j = 0; j <= items[i].message.length() - 15; j++)
+      {
         lcd.setCursor(items[i].cursorX, items[i].cursorY);
-        lcd.print(items[i].message.substring(j, j + 16));
+        lcd.print(items[i].message.substring(j, j + 16 - items[i].cursorX));
         delay(500); // Adjust the delay to control the speed of the scrolling
       }
-    } else {
+    }
+    else
+    {
+      lcd.setCursor(items[i].cursorX, items[i].cursorY);
       lcd.print(items[i].message);
     }
   }
 }
 
-void displayMessage(const char* line1, const char* line2)
-{
-  DisplayItem items[2] = {{0, 0, line1}, {0, 1, line2}};
+void displayMessage(const String& line1, const String& line2) {
   lcd.clear();
-  multiPrint(items, 2);
-  delay(3000); // Display the message for 3 seconds
+  lcd.setCursor(0, 0);
+  lcd.print(line1);
+
+  // display the message on the second line
+
+  // Check if the message is longer than 16 characters
+  if (line2.length() > 16)
+  {
+    for (int j = 0; j <= line2.length() - 15; j++)
+    {
+      lcd.setCursor(0, 1);
+      lcd.print(line2.substring(j, j + 16));
+      delay(500); // Adjust the delay to control the speed of the scrolling
+    }
+    delay(1000);
+  }
+  else
+  {
+    // Calculate the number of spaces needed to center the text
+    int spaces = (16 - line2.length()) / 2;
+    // Add the spaces to the beginning of the string
+    String spacedLine2 = line2;
+    for (int i = 0; i < spaces; i++)
+    {
+      spacedLine2 = " " + spacedLine2;
+    }
+    // Display the message
+    lcd.setCursor(0, 1);
+    lcd.print(line2);
+    delay(3000); // Display the message for 3 seconds
+  }
 }

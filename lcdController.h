@@ -19,7 +19,7 @@ struct DisplayItem {
 
 void multiPrint(DisplayItem* items, int itemCount);
 void toggleLCDPower(bool powerOn);
-void displayMessage(const char* line1, const char* line2);
+void displayMessage(const String& line1, const String& line2);
 
 extern hd44780_I2Cexp lcd;
 
