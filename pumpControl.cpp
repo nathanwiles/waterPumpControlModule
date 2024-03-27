@@ -1,21 +1,27 @@
 #include "pumpControl.h"
 
+const int MAIN_PUMP_PIN = 20;
+const int REFILL_PUMP_PIN = 21;
+
+void setupPumpControl() {
+  pinMode(MAIN_PUMP_PIN, OUTPUT);
+  pinMode(REFILL_PUMP_PIN, OUTPUT);
+  digitalWrite(MAIN_PUMP_PIN, HIGH);
+  digitalWrite(REFILL_PUMP_PIN, HIGH);
+}
+
 void turnOnMainPump() {
-  pinMode(20, OUTPUT);
-  digitalWrite(20, LOW);
+  digitalWrite(MAIN_PUMP_PIN, LOW);
 }
 
 void turnOnRefillPump() {
-  pinMode(21, OUTPUT);
-  digitalWrite(21, LOW);
+  digitalWrite(REFILL_PUMP_PIN, LOW);
 }
 
 void turnOffMainPump() {
-  pinMode(20, OUTPUT);
-  digitalWrite(20, HIGH);
+  digitalWrite(MAIN_PUMP_PIN, HIGH);
 }
 
 void turnOffRefillPump() {
-  pinMode(21, OUTPUT);
-  digitalWrite(21, HIGH);
+  digitalWrite(REFILL_PUMP_PIN, HIGH);
 }

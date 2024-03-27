@@ -8,4 +8,6 @@ void turnOnRefillPump();
 void turnOffMainPump();
 void turnOffRefillPump();
 
+void setupPumpControl();
+
 #endif
