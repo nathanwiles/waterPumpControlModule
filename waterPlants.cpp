@@ -4,10 +4,7 @@ bool refillMessageToggle = false;
 
 void waterPlants(int wateringDuration = 30)
 {
-  DisplayItem items[2]; // Declare items here
-
-  int *waterLevelSensorValues = readWaterLevelSensors();
-  WaterLevels levels = getReservoirLevels(waterLevelSensorValues);
+  WaterLevels levels = getReservoirLevels();
 
   // If main tank has water, run pump
   if (levels.mainLevel != "E")
@@ -20,8 +17,7 @@ void waterPlants(int wateringDuration = 30)
 
   for (int i = wateringDuration; i > 0; i--)
   {
-    waterLevelSensorValues = readWaterLevelSensors();
-    levels = getReservoirLevels(waterLevelSensorValues);
+    levels = getReservoirLevels();
     // If main tank runs out, refill, then continue
     if (levels.mainLevel == "E")
     {
@@ -29,17 +25,19 @@ void waterPlants(int wateringDuration = 30)
     }
 
     // Display the countdown with the animation
-    items[0] = {0, 0, "Watering: "};
-    items[1] = {4, 1, String(i) + "s left"};
-    lcd.clear();
-    multiPrint(items, 2);
-    lcd.setCursor(0, 1);
-    lcd.write(byte(frame)); // Display the animation
-    lcd.setCursor(15, 1);
-    lcd.write(byte(frame)); // Display the animation
-    delay(1000);
+    displayMessage("Watering:", (i + "s left"));
 
-    frame = (frame + 1) % 7; // Increment the frame counter and reset it to 0 when it reaches 8
+    // Display the animation frames in 2 places.
+    lcd.setCursor(0, 1);
+    lcd.write(byte(frame));
+    lcd.setCursor(15, 1);
+    lcd.write(byte(frame));
+
+    // Increment the frame counter and reset it to 0 when it reaches 8
+    frame = (frame + 1) % 7;
+
+    // Delay for 1 second
+    delay(1000);
   }
 
   turnOffMainPump();
