@@ -1,27 +1,31 @@
 #include "refillTank.h"
 
-void refillTank() {
+void refillTank()
+{
   // define the water level sensor values
   WaterLevels levels = getReservoirLevels();
 
   // Handle the case where the reserve tank is empty
-  if (levels.reserveLevel == "E") {
-    displayRefillMessage();
-    refillTank();
-  };
 
   // Handle the case where the main tank is full
-  if (levels.mainLevel == "F") {
+  if (levels.mainLevel == "F")
+  {
     displayMessage("Main Tank:", "Already Full!");
     delay(2000);
   };
 
   // Handle the case where the main tank is not full and the reserve tank is full
-  if (levels.mainLevel != "F" && levels.reserveLevel == "F") {
+  if (levels.mainLevel != "F")
+  {
+    if (levels.reserveLevel == "E")
+    {
+      displayRefillMessage();
+    };
     // Refill the main tank
     turnOnRefillPump();
     displayMessage("Main Tank:", "Refilling");
-    do {
+    do
+    {
       // refresh the water level sensor values
       levels = getReservoirLevels();
 
@@ -36,7 +40,8 @@ void refillTank() {
         delay(5000);
         turnOffMainPump();
 
-        while (digitalRead(4) == HIGH) {
+        while (digitalRead(4) == HIGH)
+        {
           displayMessage("ALERT:", "Overflow Detected");
           delay(500);
           lcd.clear();
@@ -48,7 +53,8 @@ void refillTank() {
         turnOnRefillPump();
       }
 
-      if (levels.reserveLevel == "E") {
+      if (levels.reserveLevel == "E")
+      {
         // If the reserve tank is empty, stop refilling and display the message
         turnOffRefillPump();
         displayRefillMessage();
