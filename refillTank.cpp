@@ -1,27 +1,29 @@
 #include "refillTank.h"
 
-
-void refillTank()
-{
+void refillTank() {
   // define the water level sensor values
-  int *waterLevelSensorValues = readWaterLevelSensors();
-  WaterLevels levels = getReservoirLevels(waterLevelSensorValues);
+  WaterLevels levels = getReservoirLevels();
 
+  // Handle the case where the reserve tank is empty
+  if (levels.reserveLevel == "E") {
+    displayRefillMessage();
+    refillTank();
+  };
+
+  // Handle the case where the main tank is full
   if (levels.mainLevel == "F") {
     displayMessage("Main Tank:", "Already Full!");
     delay(2000);
   };
 
-  if (levels.mainLevel != "F" && levels.reserveLevel == "F")
-  {
+  // Handle the case where the main tank is not full and the reserve tank is full
+  if (levels.mainLevel != "F" && levels.reserveLevel == "F") {
     // Refill the main tank
-      turnOnRefillPump();
-      displayMessage("Main Tank:", "Refilling");
-    do
-    {
+    turnOnRefillPump();
+    displayMessage("Main Tank:", "Refilling");
+    do {
       // refresh the water level sensor values
-      waterLevelSensorValues = readWaterLevelSensors();
-      levels = getReservoirLevels(waterLevelSensorValues);
+      levels = getReservoirLevels();
 
       // Check if the overflow sensor is triggered
       if (digitalRead(4) == HIGH)
@@ -34,30 +36,30 @@ void refillTank()
         delay(5000);
         turnOffMainPump();
 
-        while (digitalRead(4) == HIGH)
-        {
+        while (digitalRead(4) == HIGH) {
           displayMessage("ALERT:", "Overflow Detected");
           delay(500);
           lcd.clear();
         }
 
         displayMessage("Overflow Cleared", "Resuming");
-        delay(2000);
+        delay(3000);
+        displayMessage("Main Tank:", "Refilling");
+        turnOnRefillPump();
       }
 
-      if (levels.reserveLevel == "E")
-      {
+      if (levels.reserveLevel == "E") {
         // If the reserve tank is empty, stop refilling and display the message
         turnOffRefillPump();
         displayRefillMessage();
-        return;
+        displayMessage("Main Tank:", "Refilling");
+        turnOnRefillPump();
       }
-      delay(500);
+
     } while (levels.mainLevel != "F");
     // Stop the refill pump and display the message
     turnOffRefillPump();
     displayMessage("Main Tank:", "Full");
-    delay(5000);
-    return;
+    delay(3000);
   }
 }
